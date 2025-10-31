@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Слова HSK {{ hsk_level }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🎯 Слова уровня HSK {{ hsk_level }}</h1>
+    <p>Все слова, соответствующие {{ hsk_level }} уровню экзамена HSK.</p>
+
+    <div class="word-list">
+        {% for word in words %}
+        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; border-bottom: 1px solid #eee;">
+            <div style="flex: 1;">
+                <h3 style="margin: 0; color: #c62828;">
+                    <a href="{% url 'dictionary:word_detail' word.id %}" style="color: inherit; text-decoration: none;">
+                        {{ word.russian }}
+                    </a>
+                </h3>
+                <div style="font-size: 1.2rem; margin: 0.25rem 0;">{{ word.chinese_simplified }}</div>
+                <div style="color: #666;">{{ word.pinyin }} • {{ word.get_part_of_speech_display }}</div>
+            </div>
+            <a href="{% url 'dictionary:word_detail' word.id %}" class="btn">Подробнее</a>
+        </div>
+        {% empty %}
+        <div style="text-align: center; padding: 2rem; color: #666;">
+            <p>😔 Слова для HSK {{ hsk_level }} еще не добавлены</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

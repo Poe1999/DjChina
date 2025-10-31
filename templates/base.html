@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国文化和中文 - Китайский язык и культура</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="dragon-pattern">
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'core:home' %}">中国文化和中文</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'core:home' %}">🏠 Главная</a></li>
+                <li><a href="{% url 'dictionary:home' %}">📚 Словарь</a></li>
+                <li><a href="{% url 'content:home' %}">🎎 Контент</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'admin:index' %}">⚙️ Админка</a></li>
+                    <li><a href="{% url 'logout' %}">🚪 Выйти ({{ user.username }})</a></li>
+                {% else %}
+                    <li><a href="{% url 'admin:index' %}">🔑 Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>🐉 中国文化和中文 &copy; 2024 Китайский язык и культура. Все права защищены. 🐲</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

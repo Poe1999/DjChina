@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты поиска: {{ query }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🔍 Результаты поиска</h1>
+
+    <!-- Форма поиска -->
+    <form method="get" action="{% url 'dictionary:search' %}" style="margin-bottom: 2rem;">
+        <div style="display: flex; gap: 10px;">
+            <input type="text" name="q" placeholder="Введите слово для поиска..."
+                   value="{{ query }}" style="flex: 1; padding: 12px; border: 2px solid #c62828; border-radius: 8px;">
+            <select name="type" style="padding: 12px; border: 2px solid #c62828; border-radius: 8px;">
+                <option value="ru-zh" {% if search_type =='ru-zh' %}selected{% endif %}>Русский → Китайский</option>
+                <option value="zh-ru" {% if search_type =='zh-ru' %}selected{% endif %}>Китайский → Русский</option>
+            </select>
+            <button type="submit" class="btn">Найти</button>
+        </div>
+    </form>
+
+    <!-- Результаты -->
+    {% if query %}
+        <div style="margin-bottom: 1rem;">
+            <p>
+                Найдено слов: <strong>{{ results_count }}</strong>
+                {% if search_type == 'ru-zh' %}
+                    по запросу "{{ query }}" (русский → китайский)
+                {% else %}
+                    по запросу "{{ query }}" (китайский → русский)
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+
+    <!-- Список результатов -->
+    <div class="search-results">
+        {% for word in results %}
+        <div class="word-result" style="border-left: 4px solid #c62828; padding: 1rem; margin-bottom: 1rem; background: #f8f9fa; border-radius: 0 8px 8px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: start; gap: 1rem;">
+                <div style="flex: 1;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #c62828;">
+                        <a href="{% url 'dictionary:word_detail' word.id %}" style="color: inherit; text-decoration: none;">
+                            {{ word.russian }}
+                        </a>
+                    </h3>
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">{{ word.chinese_simplified }}</div>
+                    <div style="color: #666; margin-bottom: 0.5rem;">{{ word.pinyin }}</div>
+                    <div style="display: flex; gap: 1rem; font-size: 0.9rem; color: #888;">
+                        <span>{{ word.get_part_of_speech_display }}</span>
+                        <span>HSK {{ word.hsk_level }}</span>
+                    </div>
+                </div>
+                <a href="{% url 'dictionary:word_detail' word.id %}" class="btn">Подробнее</a>
+            </div>
+
+            <!-- Временно убираем блок с примерами, чтобы избежать ошибок -->
+            <!--
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                <strong>Примеры:</strong>
+                {% for example in word.examples.all|slice:":2" %}
+                <div style="margin-top: 0.5rem;">
+                    <div>{{ example.example_ru }}</div>
+                    <div style="color: #666;">{{ example.example_zh }} ({{ example.example_pinyin }})</div>
+                </div>
+                {% endfor %}
+            </div>
+            -->
+        </div>
+        {% empty %}
+        {% if query %}
+        <div style="text-align: center; padding: 2rem; color: #666;">
+            <p>😔 По вашему запросу ничего не найдено</p>
+            <p>Попробуйте изменить запрос или направление перевода</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

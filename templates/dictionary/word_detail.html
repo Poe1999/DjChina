@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ word.russian }} - {{ word.chinese_simplified }} - Русско-китайский словарь{% endblock %}
+
+{% block content %}
+<div class="card">
+    <!-- Хлебные крошки -->
+    <nav style="margin-bottom: 1rem;">
+        <a href="{% url 'dictionary:home' %}">Словарь</a> →
+        <span>{{ word.russian }}</span>
+    </nav>
+
+    <!-- Основная информация о слове -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="color: #c62828; margin-bottom: 0.5rem;">{{ word.russian }}</h1>
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">{{ word.chinese_simplified }}</div>
+        {% if word.chinese_traditional %}
+        <div style="font-size: 1.5rem; color: #666; margin-bottom: 0.5rem;">
+            Традиционный: {{ word.chinese_traditional }}
+        </div>
+        {% endif %}
+        <div style="font-size: 1.5rem; color: #c62828; margin-bottom: 1rem;">{{ word.pinyin }}</div>
+    </div>
+
+    <!-- Детальная информация -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.9rem; color: #666;">Часть речи</div>
+            <div style="font-weight: bold; color: #c62828;">{{ word.get_part_of_speech_display }}</div>
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.9rem; color: #666;">Уровень HSK</div>
+            <div style="font-weight: bold; color: #c62828;">{{ word.hsk_level }}</div>
+        </div>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.9rem; color: #666;">Частота</div>
+            <div style="font-weight: bold; color: #c62828;">{{ word.frequency }}</div>
+        </div>
+    </div>
+
+    <!-- Примеры использования -->
+    {% if examples %}
+    <div class="examples-section">
+        <h2>📝 Примеры использования</h2>
+        {% for example in examples %}
+        <div style="background: #fff5f5; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; border-left: 4px solid #c62828;">
+            <div style="margin-bottom: 0.5rem;">
+                <strong>Русский:</strong> {{ example.example_ru }}
+            </div>
+            <div style="margin-bottom: 0.5rem;">
+                <strong>Китайский:</strong> {{ example.example_zh }}
+            </div>
+            <div style="color: #666;">
+                <strong>Пиньинь:</strong> {{ example.example_pinyin }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Похожие слова -->
+    {% if similar_words %}
+    <div class="similar-words" style="margin-top: 2rem;">
+        <h2>🔗 Похожие слова</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem;">
+            {% for similar in similar_words %}
+            <a href="{% url 'dictionary:word_detail' similar.id %}"
+               style="display: block; padding: 1rem; background: white; border-radius: 8px; text-decoration: none; color: inherit; border: 1px solid #ddd;">
+                <div style="font-weight: bold; color: #c62828;">{{ similar.russian }}</div>
+                <div>{{ similar.chinese_simplified }}</div>
+                <div style="font-size: 0.8rem; color: #666;">{{ similar.pinyin }}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

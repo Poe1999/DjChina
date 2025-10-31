@@ -1,0 +1,537 @@
+/* ===== ОСНОВНЫЕ СТИЛИ В КИТАЙСКО-ЯПОНСКОМ СТИЛЕ ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-red: #c62828;
+    --dark-red: #8b0000;
+    --light-red: #ff5252;
+    --gold: #ffd700;
+    --dark-gold: #b8860b;
+    --black: #2c2c2c;
+    --white: #ffffff;
+    --cream: #fffaf0;
+    --dark-cream: #f5f5dc;
+    --shadow: 0 4px 15px rgba(198, 40, 40, 0.2);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--black);
+    background: linear-gradient(135deg, var(--cream) 0%, var(--dark-cream) 100%);
+    min-height: 100vh;
+}
+
+/* ===== НАВИГАЦИЯ В СТИЛЕ КИТАЙСКОГО ХРАМА ===== */
+header {
+    background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo a {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--gold);
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+nav .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+nav .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+}
+
+nav .nav-links a:hover {
+    background: var(--gold);
+    color: var(--dark-red);
+    transform: translateY(-2px);
+}
+
+nav .nav-links a::before {
+    content: "•";
+    position: absolute;
+    left: -10px;
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+nav .nav-links a:hover::before {
+    opacity: 1;
+}
+
+/* ===== КНОПКИ В АЗИАТСКОМ СТИЛЕ ===== */
+.btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    color: var(--white);
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.3);
+    border: 2px solid transparent;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(198, 40, 40, 0.4);
+    background: linear-gradient(135deg, var(--light-red) 0%, var(--primary-red) 100%);
+    border: 2px solid var(--gold);
+}
+
+.btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--dark-gold) 100%);
+    color: var(--dark-red);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-gold:hover {
+    background: linear-gradient(135deg, #ffecb3 0%, var(--gold) 100%);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-red);
+    color: var(--primary-red);
+}
+
+.btn-outline:hover {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+/* ===== КАРТОЧКИ В СТИЛЕ СВИТКОВ ===== */
+.card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(198, 40, 40, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-red), var(--gold), var(--primary-red));
+}
+
+.card h1, .card h2, .card h3 {
+    color: var(--dark-red);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.card h1::after, .card h2::after, .card h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-red), var(--gold));
+}
+
+/* ===== СЕТКА МЕМОВ В СТИЛЕ ШЕЛКОВЫХ СВИТКОВ ===== */
+.meme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.meme-item {
+    background: linear-gradient(135deg, var(--white) 0%, #fff5f5 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(198, 40, 40, 0.1);
+    position: relative;
+}
+
+.meme-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-red), var(--gold));
+}
+
+.meme-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(198, 40, 40, 0.3);
+}
+
+.meme-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.meme-info {
+    padding: 1.5rem;
+}
+
+.meme-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--dark-red);
+}
+
+.meme-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* ===== НОВОСТИ И СТАТЬИ ===== */
+.news-item, .article-item {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(198, 40, 40, 0.1);
+    border-left: 4px solid var(--primary-red);
+    transition: all 0.3s ease;
+}
+
+.news-item:hover, .article-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(198, 40, 40, 0.2);
+}
+
+.news-meta, .article-meta {
+    color: var(--dark-red);
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.news-meta span, .article-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* ===== КОММЕНТАРИИ В СТИЛЕ БАМБУКОВЫХ СВИТКОВ ===== */
+.comments-section {
+    margin-top: 3rem;
+}
+
+.comment {
+    background: linear-gradient(135deg, #fffaf0 0%, #f8f0e0 100%);
+    border-left: 4px solid var(--gold);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.comment::before {
+    content: "〰";
+    position: absolute;
+    top: -10px;
+    left: -15px;
+    color: var(--gold);
+    font-size: 1.5rem;
+    opacity: 0.7;
+}
+
+.comment:hover {
+    transform: translateX(5px);
+    background: linear-gradient(135deg, #fff5e6 0%, #f0e6d2 100%);
+}
+
+.comment-author {
+    font-weight: bold;
+    color: var(--dark-red);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-author::before {
+    content: "👤";
+}
+
+.comment-date {
+    color: var(--primary-red);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.comment-form {
+    background: linear-gradient(135deg, var(--white) 0%, #fff5f5 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    border: 2px dashed var(--primary-red);
+}
+
+/* ===== ФОРМЫ ===== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-red);
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(198, 40, 40, 0.2);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1);
+}
+
+/* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+main {
+    padding: 2rem 0;
+    min-height: calc(100vh - 200px);
+}
+
+/* ===== ФУТЕР В СТИЛЕ КИТАЙСКОГО ХРАМА ===== */
+footer {
+    background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
+    color: var(--white);
+    padding: 2rem 0;
+    margin-top: 4rem;
+    position: relative;
+}
+
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--white), var(--gold));
+}
+
+footer .container {
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+/* ===== ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ===== */
+.dragon-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23c62828' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    nav .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .meme-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    nav .logo a {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+}
+
+/* ===== АНИМАЦИИ ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card, .meme-item, .news-item, .article-item {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* ===== СПЕЦИАЛЬНЫЕ ЭФФЕКТЫ ДЛЯ КИТАЙСКОГО СТИЛЯ ===== */
+.chinese-border {
+    position: relative;
+    border: 2px solid var(--primary-red);
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.chinese-border::before, .chinese-border::after {
+    content: "❖";
+    position: absolute;
+    color: var(--gold);
+    font-size: 1.5rem;
+}
+
+.chinese-border::before {
+    top: -15px;
+    left: -15px;
+}
+
+.chinese-border::after {
+    bottom: -15px;
+    right: -15px;
+}
+
+/* Градиентные тексты */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Стили для словаря */
+.search-section {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+}
+
+.word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.word-result {
+    transition: all 0.3s ease;
+}
+
+.word-result:hover {
+    transform: translateX(5px);
+    background: #fff5f5 !important;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .word-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+}
