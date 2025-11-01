@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="card">
-    <h1> 么Китайские мемы么</h1>
+    <h1>么Китайские мемы么</h1>
     <p>Смешные мемы, картинки и шутки о китайской культуре, изучении языка и жизни в Китае. Поднимайте настроение вместе с нами!</p>
 
     <!-- Фильтры -->
@@ -19,101 +19,34 @@
 
 <!-- Сетка мемов -->
 <div class="meme-grid">
+    {% for meme in memes %}
     <div class="meme-item">
         <div style="background: #ffeaa7; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 48px; margin-bottom: 15px;">😅</div>
-            <h3>Когда пытаешься прочитать меню в китайском ресторане</h3>
-            <p>"Наверное, возьму то, что на картинке..."</p>
+            {% if meme.image %}
+            <img src="{{ meme.image.url }}" alt="{{ meme.title }}" style="max-width: 100%; max-height: 150px; object-fit: contain; margin-bottom: 15px;">
+            {% else %}
+            <div style="font-size: 48px; margin-bottom: 15px;">
+                {% cycle '😅' '🤔' '🍜' '🎉' '📝' '🛒' %}
+            </div>
+            {% endif %}
+            <h3>{{ meme.title }}</h3>
+            <p>{{ meme.content|truncatewords:20 }}</p>
         </div>
         <div class="meme-info">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>👁️ 156</span>
-                <span>💬 23</span>
-                <span>❤️ 89</span>
+                <span>👁️ {{ meme.views }}</span>
+                <span>💬 {{ meme.comments.count }}</span>
+                <span>❤️ {{ meme.views|divisibleby:3 }}</span>
             </div>
-            <a href="{% url 'content:article_detail' 9 %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
+            <a href="{% url 'content:article_detail' meme.id %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
         </div>
     </div>
-
-    <div class="meme-item">
-        <div style="background: #a29bfe; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 48px; margin-bottom: 15px;">🤔</div>
-            <h3>Четыре тона в китайском</h3>
-            <p>mā, má, mǎ, mà - это четыре разных слова!</p>
-        </div>
-        <div class="meme-info">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>👁️ 234</span>
-                <span>💬 45</span>
-                <span>❤️ 112</span>
-            </div>
-            <a href="{% url 'content:article_detail' 10 %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
-        </div>
+    {% empty %}
+    <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+        <h3>Мемы скоро будут добавлены</h3>
+        <p>Мы готовим для вас смешной контент!</p>
     </div>
-
-    <div class="meme-item">
-        <div style="background: #fd79a8; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 48px; margin-bottom: 15px;">🍜</div>
-            <h3>Китайская лапша vs Итальянская паста</h3>
-            <p>Битва титанов на моей тарелке</p>
-        </div>
-        <div class="meme-info">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>👁️ 189</span>
-                <span>💬 31</span>
-                <span>❤️ 97</span>
-            </div>
-            <a href="{% url 'content:article_detail' 11 %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
-        </div>
-    </div>
-
-    <div class="meme-item">
-        <div style="background: #55efc4; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 48px; margin-bottom: 15px;">🎉</div>
-            <h3>Китайский Новый год</h3>
-            <p>Когда родственники спрашивают, когда же я выучу китайский</p>
-        </div>
-        <div class="meme-info">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>👁️ 278</span>
-                <span>💬 67</span>
-                <span>❤️ 145</span>
-            </div>
-            <a href="{% url 'content:article_detail' 12 %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
-        </div>
-    </div>
-
-    <div class="meme-item">
-        <div style="background: #74b9ff; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
-            <h3>Писать иероглифы</h3>
-            <p>Сначала: "Это искусство!"<br>Потом: "Моя рука отваливается..."</p>
-        </div>
-        <div class="meme-info">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>👁️ 312</span>
-                <span>💬 89</span>
-                <span>❤️ 178</span>
-            </div>
-            <a href="{% url 'content:article_detail' 13 %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
-        </div>
-    </div>
-
-    <div class="meme-item">
-        <div style="background: #ffeaa7; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 48px; margin-bottom: 15px;">🛒</div>
-            <h3>Таобао в 3 утра</h3>
-            <p>"Просто посмотрю, что нового..."<br>*покупает все*</p>
-        </div>
-        <div class="meme-info">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>👁️ 201</span>
-                <span>💬 42</span>
-                <span>❤️ 123</span>
-            </div>
-            <a href="{% url 'content:article_detail' 14 %}" class="btn" style="width: 100%; text-align: center;">Смотреть и комментировать</a>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <!-- Кнопка загрузки еще -->

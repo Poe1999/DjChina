@@ -1,86 +1,67 @@
 {% extends 'base.html' %}
 
-{% block title %}Статья - Китайский сайт{% endblock %}
+{% block title %}{{ article.title }} - Китайская культура{% endblock %}
 
 {% block content %}
-<article class="card">
-    <h1>Пример статьи о Китае</h1>
-    <div style="color: #666; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
-        <small>📅 Опубликовано: 20 января 2024 | 👤 Автор: Администратор | 👁️ Просмотров: 156</small>
-    </div>
+<div class="container">
+    <article style="max-width: 800px; margin: 0 auto;">
+        <!-- Заголовок и мета-информация -->
+        <header style="margin-bottom: 30px;">
+            <h1>{{ article.title }}</h1>
+            <div style="display: flex; gap: 15px; color: #666; margin: 15px 0; flex-wrap: wrap;">
+                <span>📅 {{ article.created_at|date:"d M Y" }}</span>
+                <span>🏷️ {{ article.category.name }}</span>
+                <span>👁️ {{ article.views }} просмотров</span>
+                <span>✍️ {{ article.author.username }}</span>
+            </div>
+        </header>
 
-    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-        <h3 style="margin-top: 0;">Краткое описание</h3>
-        <p>Это пример страницы статьи. Здесь будет отображаться полный контент выбранного материала с возможностью комментирования.</p>
-    </div>
-
-    <div style="line-height: 1.8; font-size: 16px;">
-        <p>Это демонстрационная страница статьи. В реальном приложении здесь будет отображаться содержимое выбранной новости, статьи или мема.</p>
-
-        <h2>О чем эта страница?</h2>
-        <p>На этой странице пользователи смогут:</p>
-        <ul>
-            <li>Читать полный текст материалов</li>
-            <li>Просматривать изображения и медиа</li>
-            <li>Оставлять комментарии</li>
-            <li>Оценивать контент</li>
-            <li>Делиться в социальных сетях</li>
-        </ul>
-
-        <h2>Когда будет готово?</h2>
-        <p>Функционал комментариев и полное наполнение контентом будет добавлено после настройки моделей Django и создания административной панели для управления контентом.</p>
-
-        <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; margin: 20px 0;">
-            <strong>💡 Подсказка:</strong> Чтобы добавить реальные статьи, нужно создать их через админ-панель Django или импортировать из файла.
+        <!-- Изображение статьи -->
+        {% if article.image %}
+        <div style="margin-bottom: 30px;">
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px;">
         </div>
-    </div>
-</article>
+        {% endif %}
 
-<!-- Комментарии -->
-<section class="comments-section">
-    <div class="card">
-        <h2>💬 Комментарии (3)</h2>
+        <!-- Содержание статьи -->
+        <div style="line-height: 1.6; font-size: 16px;">
+            {{ article.content|linebreaks }}
+        </div>
 
-        <!-- Форма комментария -->
-        <div class="comment-form" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-            <h3>Оставить комментарий</h3>
-            <form>
-                <div class="form-group">
-                    <textarea class="form-control" rows="4" placeholder="Напишите ваш комментарий..."></textarea>
+        <!-- Комментарии -->
+        <section style="margin-top: 50px;">
+            <h3>Комментарии ({{ comments.count }})</h3>
+
+            {% for comment in comments %}
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <strong>{{ comment.author.username }}</strong>
+                    <small style="color: #666;">{{ comment.created_at|date:"d M Y H:i" }}</small>
                 </div>
-                <button type="submit" class="btn">Отправить комментарий</button>
-            </form>
-            <p style="color: #666; font-size: 14px; margin-top: 10px;">
-                💡 Войдите в систему, чтобы оставлять комментарии
+                <p style="margin: 0;">{{ comment.text }}</p>
+            </div>
+            {% empty %}
+            <p style="text-align: center; color: #666; padding: 20px;">
+                Пока нет комментариев. Будьте первым!
             </p>
-        </div>
+            {% endfor %}
 
-        <!-- Список комментариев -->
-        <div class="comments-list">
-            <div class="comment">
-                <div class="comment-author">Мария Иванова</div>
-                <div class="comment-date">22 января 2024 в 14:30</div>
-                <p>Очень интересная статья! Жду продолжения на эту тему. Особенно понравился раздел про традиции.</p>
+            <!-- Форма добавления комментария -->
+            {% if user.is_authenticated %}
+            <div style="margin-top: 30px;">
+                <h4>Добавить комментарий</h4>
+                <form method="post" action="{% url 'content:add_comment' article.id %}">
+                    {% csrf_token %}
+                    <textarea name="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;" rows="4" placeholder="Ваш комментарий..."></textarea>
+                    <button type="submit" class="btn" style="background: #3498db;">Отправить</button>
+                </form>
             </div>
-
-            <div class="comment">
-                <div class="comment-author">Алексей Петров</div>
-                <div class="comment-date">21 января 2024 в 09:15</div>
-                <p>Спасибо за полезную информацию! Как раз собираюсь в поездку в Китай, пригодится.</p>
-            </div>
-
-            <div class="comment">
-                <div class="comment-author">Елена Смирнова</div>
-                <div class="comment-date">20 января 2024 в 18:45</div>
-                <p>Отличный материал! Хотелось бы больше подробностей о современных тенденциях.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Навигация -->
-<div style="display: flex; justify-content: space-between; margin-top: 30px;">
-    <a href="{% url 'content:news_list' %}" class="btn" style="background: #7f8c8d;">← Вернуться к списку</a>
-    <a href="#" class="btn">Следующая статья →</a>
+            {% else %}
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="{% url 'admin:login' %}">Войдите</a>, чтобы оставить комментарий
+            </p>
+            {% endif %}
+        </section>
+    </article>
 </div>
 {% endblock %}

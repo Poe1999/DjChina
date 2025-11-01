@@ -10,61 +10,40 @@
     <!-- Категории -->
     <div style="display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap;">
         <button class="btn" style="background: #2c3e50;">Все статьи</button>
-        <button class="btn" style="background: #7f8c8d;">Культура</button>
-        <button class="btn" style="background: #7f8c8d;">Язык</button>
-        <button class="btn" style="background: #7f8c8d;">История</button>
-        <button class="btn" style="background: #7f8c8d;">Кухня</button>
+        {% for category in categories %}
+        <button class="btn" style="background: #7f8c8d;">{{ category.name }}</button>
+        {% endfor %}
     </div>
 </div>
 
 <!-- Список статей -->
 <div class="card">
+    {% for article in articles %}
     <div style="display: grid; grid-template-columns: 100px 1fr; gap: 20px; align-items: start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
         <div style="background: #3498db; color: white; width: 80px; height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-            🎎
+            {% if article.category.name == "Культура" %}🎎
+            {% elif article.category.name == "Язык" %}📚
+            {% elif article.category.name == "История" %}🏮
+            {% elif article.category.name == "Кухня" %}🥢
+            {% else %}📖{% endif %}
         </div>
         <div>
-            <h2>Традиции китайского чаепития</h2>
-            <p style="color: #666; margin: 10px 0;">📅 19 января 2024 | 🏷️ Культура | ⏱️ 8 мин чтения | 👁️ 324 просмотра</p>
-            <p>Китайская чайная церемония - это не просто процесс заваривания чая, а целое искусство, уходящее корнями в глубокую древность. Узнайте о символике жестов, значении посуды и философии, стоящей за этим ритуалом...</p>
-            <a href="{% url 'content:article_detail' 5 %}" class="btn">Читать статью</a>
+            <h2>{{ article.title }}</h2>
+            <p style="color: #666; margin: 10px 0;">
+                📅 {{ article.created_at|date:"d M Y" }} |
+                🏷️ {{ article.category.name }} |
+                ⏱️ {{ article.content|wordcount|divisibleby:200 }} мин чтения |
+                👁️ {{ article.views }} просмотров
+            </p>
+            <p>{{ article.content|truncatewords:50 }}</p>
+            <a href="{% url 'content:article_detail' article.id %}" class="btn">Читать статью</a>
         </div>
     </div>
-
-    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 20px; align-items: start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-        <div style="background: #e74c3c; color: white; width: 80px; height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-            🏮
-        </div>
-        <div>
-            <h2>Праздник фонарей: история и традиции</h2>
-            <p style="color: #666; margin: 10px 0;">📅 16 января 2024 | 🏷️ Культура | ⏱️ 6 мин чтения | 👁️ 278 просмотров</p>
-            <p>Юаньсяоцзе - праздник фонарей, завершающий двухнедельное празднование китайского Нового года. Узнайте о легендах, связанных с этим праздником, традиционных угощениях и современных способах празднования...</p>
-            <a href="{% url 'content:article_detail' 6 %}" class="btn">Читать статью</a>
-        </div>
+    {% empty %}
+    <div style="text-align: center; padding: 40px;">
+        <h3>Статьи скоро будут добавлены</h3>
+        <p>Мы работаем над созданием интересного контента для вас!</p>
     </div>
-
-    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 20px; align-items: start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-        <div style="background: #2ecc71; color: white; width: 80px; height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-            📚
-        </div>
-        <div>
-            <h2>Изучение китайского: с чего начать?</h2>
-            <p style="color: #666; margin: 10px 0;">📅 14 января 2024 | 🏷️ Язык | ⏱️ 10 мин чтения | 👁️ 512 просмотров</p>
-            <p>Хотите выучить китайский язык, но не знаете с чего начать? В этой статье мы разберем основные шаги: от изучения пиньиня до запоминания иероглифов. Практические советы для начинающих...</p>
-            <a href="{% url 'content:article_detail' 7 %}" class="btn">Читать статью</a>
-        </div>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 20px; align-items: start; margin-bottom: 30px;">
-        <div style="background: #9b59b6; color: white; width: 80px; height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-            🥢
-        </div>
-        <div>
-            <h2>Региональные кухни Китая</h2>
-            <p style="color: #666; margin: 10px 0;">📅 10 января 2024 | 🏷️ Кухня | ⏱️ 7 мин чтения | 👁️ 431 просмотр</p>
-            <p>Китайская кухня невероятно разнообразна! От острой сычуаньской кухни до легкой кантонской. Узнайте о восьми великих кулинарных традициях Китая и их особенностях...</p>
-            <a href="{% url 'content:article_detail' 8 %}" class="btn">Читать статью</a>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}
