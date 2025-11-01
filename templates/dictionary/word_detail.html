@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pinyin_filters %}
 
 {% block title %}{{ word.russian }} - {{ word.chinese_simplified }} - Русско-китайский словарь{% endblock %}
 
@@ -13,13 +14,15 @@
     <!-- Основная информация о слове -->
     <div style="text-align: center; margin-bottom: 2rem;">
         <h1 style="color: #c62828; margin-bottom: 0.5rem;">{{ word.russian }}</h1>
-        <div style="font-size: 3rem; margin-bottom: 0.5rem;">{{ word.chinese_simplified }}</div>
-        {% if word.chinese_traditional %}
-        <div style="font-size: 1.5rem; color: #666; margin-bottom: 0.5rem;">
-            Традиционный: {{ word.chinese_traditional }}
+        <div style="font-size: 4rem; margin-bottom: 0.5rem; font-weight: bold;">
+            {{ word.chinese_simplified|colorize_characters:word.pinyin }}
         </div>
-        {% endif %}
-        <div style="font-size: 1.5rem; color: #c62828; margin-bottom: 1rem;">{{ word.pinyin }}</div>
+        <div style="font-size: 1.8rem; margin-bottom: 1rem;">
+            {{ word.pinyin|colorize_pinyin }}
+        </div>
+        <div style="color: #666; font-size: 1.1rem;">
+            Альтернативная запись: {{ word.pinyin|pinyin_with_tones }}
+        </div>
     </div>
 
     <!-- Детальная информация -->
@@ -47,32 +50,21 @@
             <div style="margin-bottom: 0.5rem;">
                 <strong>Русский:</strong> {{ example.example_ru }}
             </div>
-            <div style="margin-bottom: 0.5rem;">
+            <div style="margin-bottom: 0.5rem; font-size: 1.2rem;">
                 <strong>Китайский:</strong> {{ example.example_zh }}
             </div>
-            <div style="color: #666;">
-                <strong>Пиньинь:</strong> {{ example.example_pinyin }}
+            <div style="color: #666; font-size: 1.1rem;">
+                <strong>Пиньинь:</strong> {{ example.example_pinyin|colorize_pinyin }}
             </div>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
-    <!-- Похожие слова -->
-    {% if similar_words %}
-    <div class="similar-words" style="margin-top: 2rem;">
-        <h2>🔗 Похожие слова</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem;">
-            {% for similar in similar_words %}
-            <a href="{% url 'dictionary:word_detail' similar.id %}"
-               style="display: block; padding: 1rem; background: white; border-radius: 8px; text-decoration: none; color: inherit; border: 1px solid #ddd;">
-                <div style="font-weight: bold; color: #c62828;">{{ similar.russian }}</div>
-                <div>{{ similar.chinese_simplified }}</div>
-                <div style="font-size: 0.8rem; color: #666;">{{ similar.pinyin }}</div>
-            </a>
-            {% endfor %}
-        </div>
+    <!-- Навигация -->
+    <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+        <a href="{% url 'dictionary:home' %}" class="btn" style="background: #7f8c8d;">← Вернуться к словарю</a>
+        <a href="{% url 'dictionary:search' %}?q={{ word.russian }}" class="btn">Новый поиск →</a>
     </div>
-    {% endif %}
 </div>
 {% endblock %}

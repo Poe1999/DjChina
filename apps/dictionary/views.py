@@ -43,11 +43,10 @@ def word_search(request):
             # Поиск китайских слов - ИСПРАВЛЕНО: убрали select_related
             results = Word.objects.filter(
                 Q(chinese_simplified__icontains=query) |
-                Q(chinese_traditional__icontains=query) |
                 Q(pinyin__icontains=query)
             )
 
-    return render(request, 'dictionary/search_results.html', {
+    return render(request, 'dictionary/search_result.html', {
         'results': results,
         'query': query,
         'search_type': search_type,

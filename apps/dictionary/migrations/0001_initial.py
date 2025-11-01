@@ -30,7 +30,6 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('russian', models.CharField(max_length=200, verbose_name='Русское слово')),
                 ('chinese_simplified', models.CharField(max_length=100, verbose_name='Китайский (упрощенный)')),
-                ('chinese_traditional', models.CharField(blank=True, max_length=100, verbose_name='Китайский (традиционный)')),
                 ('pinyin', models.CharField(max_length=200, verbose_name='Пиньинь')),
                 ('part_of_speech', models.CharField(choices=[('noun', 'Существительное'), ('verb', 'Глагол'), ('adjective', 'Прилагательное'), ('adverb', 'Наречие'), ('pronoun', 'Местоимение'), ('numeral', 'Числительное'), ('preposition', 'Предлог'), ('conjunction', 'Союз'), ('interjection', 'Междометие')], default='noun', max_length=20)),
                 ('hsk_level', models.IntegerField(default=1, verbose_name='Уровень HSK')),

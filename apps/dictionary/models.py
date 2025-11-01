@@ -23,6 +23,17 @@ class Word(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_pinyin_syllables(self):
+        import re
+        pinyin_text = self.pinyin.strip()
+        syllables = re.split(r'[\s\']+', pinyin_text)
+        return syllables
+
+    def get_tone_colors(self):
+        from .templatetags.pinyin_filters import split_pinyin
+        syllables = split_pinyin(self.pinyin)
+        return [syllable['color'] for syllable in syllables]
+
     class Meta:
         verbose_name = "Слово"
         verbose_name_plural = "Слова"

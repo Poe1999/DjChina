@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load pinyin_filters %}
 
 {% block title %}Русско-китайский словарь{% endblock %}
 
 {% block content %}
 <div class="card">
     <h1>📚 Русско-китайский словарь</h1>
-    <p>Наш словарь содержит более <strong>{{ total_words }}</strong> слов и выражений с подробными переводами, примерами использования и произношением.</p>
+    <p>Наш словарь содержит более <strong>{{ total_words }}</strong> слов и выражений с <strong>цветовым кодированием тонов</strong> для легкого изучения произношения.</p>
 
     <!-- Форма поиска -->
     <div class="search-section" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); padding: 2rem; border-radius: 12px; margin: 2rem 0;">
@@ -24,10 +25,46 @@
     </div>
 </div>
 
+<!-- Легенда тонов -->
+<div class="card">
+    <h2>🎨 Легенда тонов пиньиня</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 15px;">
+        <div style="text-align: center; padding: 12px; border-radius: 8px; background: #f8f9fa; border: 2px solid #FFA500;">
+            <div style="color: #FFA500; font-size: 20px; font-weight: bold;">mā</div>
+            <div style="font-weight: bold;">Первый тон</div>
+            <small style="color: #666;">Высокий ровный</small>
+        </div>
+        <div style="text-align: center; padding: 12px; border-radius: 8px; background: #f8f9fa; border: 2px solid #008000;">
+            <div style="color: #008000; font-size: 20px; font-weight: bold;">má</div>
+            <div style="font-weight: bold;">Второй тон</div>
+            <small style="color: #666;">Восходящий</small>
+        </div>
+        <div style="text-align: center; padding: 12px; border-radius: 8px; background: #f8f9fa; border: 2px solid #4169E1;">
+            <div style="color: #4169E1; font-size: 20px; font-weight: bold;">mǎ</div>
+            <div style="font-weight: bold;">Третий тон</div>
+            <small style="color: #666;">Низкий</small>
+        </div>
+        <div style="text-align: center; padding: 12px; border-radius: 8px; background: #f8f9fa; border: 2px solid #8B0000;">
+            <div style="color: #8B0000; font-size: 20px; font-weight: bold;">mà</div>
+            <div style="font-weight: bold;">Четвертый тон</div>
+            <small style="color: #666;">Нисходящий</small>
+        </div>
+        <div style="text-align: center; padding: 12px; border-radius: 8px; background: #f8f9fa; border: 2px solid #A9A9A9;">
+            <div style="color: #A9A9A9; font-size: 20px; font-weight: bold;">ma</div>
+            <div style="font-weight: bold;">Нейтральный</div>
+            <small style="color: #666;">Легкий</small>
+        </div>
+    </div>
+</div>
+
 <!-- Статистика -->
 <div class="card">
     <h2>📊 Статистика словаря</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
+        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            <div style="font-size: 24px; font-weight: bold; color: #c62828;">{{ total_words }}</div>
+            <div style="font-size: 14px; color: #666;">Всего слов</div>
+        </div>
         {% for level, count in words_by_hsk.items %}
         <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
             <div style="font-size: 24px; font-weight: bold; color: #c62828;">{{ count }}</div>
@@ -40,18 +77,36 @@
 <!-- Популярные слова -->
 <div class="card">
     <h2>🔥 Популярные слова</h2>
-    <div class="word-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+    <div class="word-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 20px;">
         {% for word in featured_words %}
-        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #c62828; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-            <div style="font-weight: bold; color: #c62828;">{{ word.russian }}</div>
-            <div style="font-size: 18px; margin: 5px 0;">{{ word.chinese_simplified }}</div>
-            <div style="color: #666; font-size: 14px;">{{ word.pinyin }}</div>
-            <a href="{% url 'dictionary:word_detail' word.id %}" style="display: block; margin-top: 10px; color: #c62828; text-decoration: none; font-size: 14px;">
+        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #c62828; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <div style="font-weight: bold; color: #c62828; font-size: 16px; margin-bottom: 8px;">{{ word.russian }}</div>
+
+            <!-- Цветные иероглифы -->
+            <div style="font-size: 24px; margin: 8px 0; font-weight: bold; min-height: 40px;">
+                {{ word.chinese_simplified|colorize_characters:word.pinyin }}
+            </div>
+
+            <!-- Цветной пиньинь с тонами -->
+            <div style="color: #666; font-size: 14px; min-height: 50px; line-height: 1.4;">
+                {{ word.pinyin|colorize_pinyin }}
+            </div>
+
+            <!-- Дополнительная информация -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px; color: #888;">
+                <span>{{ word.get_part_of_speech_display }}</span>
+                <span>HSK {{ word.hsk_level }}</span>
+            </div>
+
+            <a href="{% url 'dictionary:word_detail' word.id %}" style="display: block; margin-top: 12px; color: #c62828; text-decoration: none; font-size: 14px; text-align: center; padding: 5px; border: 1px solid #c62828; border-radius: 4px; transition: all 0.3s ease;">
                 Подробнее →
             </a>
         </div>
         {% empty %}
-        <p>Слова еще не добавлены в словарь.</p>
+        <div style="text-align: center; padding: 2rem; color: #666; grid-column: 1 / -1;">
+            <p>😔 Слова еще не добавлены в словарь</p>
+            <a href="/admin/dictionary/word/add/" class="btn" style="margin-top: 10px;">Добавить слова через админку</a>
+        </div>
         {% endfor %}
     </div>
 </div>
@@ -63,10 +118,22 @@
         {% for level in "123456" %}
         <a href="{% url 'dictionary:words_by_hsk' forloop.counter %}"
            class="btn"
-           style="background: linear-gradient(135deg, #c62828, #e53935); text-align: center;">
+           style="background: linear-gradient(135deg, #c62828, #e53935); text-align: center; padding: 12px;">
             HSK {{ level }}
         </a>
         {% endfor %}
     </div>
 </div>
+
+<style>
+.word-grid > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(198, 40, 40, 0.2);
+}
+
+.word-grid a:hover {
+    background: #c62828;
+    color: white;
+}
+</style>
 {% endblock %}
