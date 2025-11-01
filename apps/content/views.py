@@ -5,8 +5,7 @@ from .models import Article, Category, Comment
 
 
 def home(request):
-    """Главная страница контента - показывает последние материалы"""
-    # Получаем последние статьи, мемы и новости
+
     latest_articles = Article.objects.filter(
         content_type='article',
         is_published=True
@@ -69,11 +68,9 @@ def news_list(request):
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id, is_published=True)
 
-    # Увеличиваем счетчик просмотров
     article.views += 1
     article.save()
 
-    # Получаем комментарии к статье
     comments = article.comments.filter(is_active=True).order_by('-created_at')
 
     return render(request, 'content/article_detail.html', {

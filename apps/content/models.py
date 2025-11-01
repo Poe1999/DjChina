@@ -24,19 +24,19 @@ class Article(models.Model):
     content_type = models.CharField(
         max_length=20,
         choices=CONTENT_TYPES,
-        default='article'  # ⬅️ ДОБАВЛЕНО значение по умолчанию
+        default='article'
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
-        null=True,  # ⬅️ ДОБАВЛЕНО для возможности миграции
-        blank=True  # ⬅️ ДОБАВЛЕНО для возможности миграции
+        null=True,
+        blank=True
     )
     image = models.ImageField(upload_to='content/', blank=True, null=True)
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        default=1  # ⬅️ ДОБАВЛЕНО значение по умолчанию (ID суперпользователя)
+        default=1
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
     <article style="max-width: 800px; margin: 0 auto;">
-        <!-- Заголовок и мета-информация -->
+
         <header style="margin-bottom: 30px;">
             <h1>{{ article.title }}</h1>
             <div style="display: flex; gap: 15px; color: #666; margin: 15px 0; flex-wrap: wrap;">
@@ -16,19 +16,18 @@
             </div>
         </header>
 
-        <!-- Изображение статьи -->
         {% if article.image %}
         <div style="margin-bottom: 30px;">
             <img src="{{ article.image.url }}" alt="{{ article.title }}" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px;">
         </div>
         {% endif %}
 
-        <!-- Содержание статьи -->
+
         <div style="line-height: 1.6; font-size: 16px;">
             {{ article.content|linebreaks }}
         </div>
 
-        <!-- Комментарии -->
+
         <section style="margin-top: 50px;">
             <h3>Комментарии ({{ comments.count }})</h3>
 
@@ -46,7 +45,6 @@
             </p>
             {% endfor %}
 
-            <!-- Форма добавления комментария -->
             {% if user.is_authenticated %}
             <div style="margin-top: 30px;">
                 <h4>Добавить комментарий</h4>

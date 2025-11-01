@@ -8,7 +8,7 @@
     <h1>📚 Русско-китайский словарь</h1>
     <p>Наш словарь содержит более <strong>{{ total_words }}</strong> слов и выражений с <strong>цветовым кодированием тонов</strong> для легкого изучения произношения.</p>
 
-    <!-- Форма поиска -->
+
     <div class="search-section" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); padding: 2rem; border-radius: 12px; margin: 2rem 0;">
         <h2>🔍 Поиск слов</h2>
         <form method="get" action="{% url 'dictionary:search' %}" class="search-form">
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<!-- Легенда тонов -->
+
 <div class="card">
     <h2>🎨 Легенда тонов пиньиня</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 15px;">
@@ -57,9 +57,9 @@
     </div>
 </div>
 
-<!-- Статистика -->
+
 <div class="card">
-    <h2>📊 Статистика словаря</h2>
+    <h2>Статистика словаря</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
         <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
             <div style="font-size: 24px; font-weight: bold; color: #c62828;">{{ total_words }}</div>
@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<!-- Популярные слова -->
+
 <div class="card">
     <h2>🔥 Популярные слова</h2>
     <div class="word-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 20px;">
@@ -111,9 +111,9 @@
     </div>
 </div>
 
-<!-- Уровни HSK -->
+
 <div class="card">
-    <h2>🎯 Слова по уровням HSK</h2>
+    <h2>Слова по уровням HSK</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 20px;">
         {% for level in "123456" %}
         <a href="{% url 'dictionary:words_by_hsk' forloop.counter %}"

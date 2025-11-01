@@ -7,7 +7,7 @@
 <div class="card">
     <h1>🔍 Результаты поиска</h1>
 
-    <!-- Форма поиска -->
+
     <form method="get" action="{% url 'dictionary:search' %}" style="margin-bottom: 2rem;">
         <div style="display: flex; gap: 10px;">
             <input type="text" name="q" placeholder="Введите слово для поиска..."
@@ -20,7 +20,6 @@
         </div>
     </form>
 
-    <!-- Результаты -->
     {% if query %}
         <div style="margin-bottom: 1rem;">
             <p>
@@ -34,7 +33,7 @@
         </div>
     {% endif %}
 
-    <!-- Список результатов -->
+
     <div class="search-results">
         {% for word in results %}
         <div class="word-result" style="border-left: 4px solid #c62828; padding: 1rem; margin-bottom: 1rem; background: #f8f9fa; border-radius: 0 8px 8px 0;">

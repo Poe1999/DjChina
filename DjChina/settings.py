@@ -13,21 +13,15 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-_6!#w3#t(+(a2(#rqm8w0qxwucfv2^03^gy#%#i3$8(lc=p8sa'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Мои приложения
     'apps.core',
     'apps.dictionary',
     'apps.content',
@@ -59,16 +52,16 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',  # Глобальные шаблоны проекта
+            BASE_DIR / 'templates',
         ],
-        'APP_DIRS': True,  # Искать шаблоны в папках templates приложений
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media',  # Для работы с MEDIA_URL в шаблонах
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -76,8 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjChina.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -86,8 +77,6 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -104,57 +93,48 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'  # Изменено с 'en-us' на русский
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'Europe/Moscow'  # Изменено на московское время
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-# Дополнительные места для сбора статических файлов
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Папка со статическими файлами для разработки
+    BASE_DIR / "static",
 ]
 
-# Папка для collectstatic (для продакшена)
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Media files (пользовательские загрузки)
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Настройки аутентификации
-LOGIN_REDIRECT_URL = '/'  # Куда перенаправлять после входа
-LOGOUT_REDIRECT_URL = '/'  # Куда перенаправлять после выхода
 
-# Настройки для загрузки файлов
-FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
-# Email settings (для разработки)
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Security settings для разработки
-# В продакшене обязательно измените!
+
 if DEBUG:
-    # Для отладки - разрешаем доступ ко всем хостам
+
     ALLOWED_HOSTS = ['*']
 
-    # Для отладки статических файлов
     import socket
 
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())

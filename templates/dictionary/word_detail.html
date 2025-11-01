@@ -5,13 +5,12 @@
 
 {% block content %}
 <div class="card">
-    <!-- Хлебные крошки -->
+
     <nav style="margin-bottom: 1rem;">
         <a href="{% url 'dictionary:home' %}">Словарь</a> →
         <span>{{ word.russian }}</span>
     </nav>
 
-    <!-- Основная информация о слове -->
     <div style="text-align: center; margin-bottom: 2rem;">
         <h1 style="color: #c62828; margin-bottom: 0.5rem;">{{ word.russian }}</h1>
         <div style="font-size: 4rem; margin-bottom: 0.5rem; font-weight: bold;">
@@ -24,8 +23,6 @@
             Альтернативная запись: {{ word.pinyin|pinyin_with_tones }}
         </div>
     </div>
-
-    <!-- Детальная информация -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
         <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
             <div style="font-size: 0.9rem; color: #666;">Часть речи</div>
@@ -41,10 +38,10 @@
         </div>
     </div>
 
-    <!-- Примеры использования -->
+
     {% if examples %}
     <div class="examples-section">
-        <h2>📝 Примеры использования</h2>
+        <h2>Примеры использования</h2>
         {% for example in examples %}
         <div style="background: #fff5f5; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; border-left: 4px solid #c62828;">
             <div style="margin-bottom: 0.5rem;">
@@ -61,7 +58,6 @@
     </div>
     {% endif %}
 
-    <!-- Навигация -->
     <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
         <a href="{% url 'dictionary:home' %}" class="btn" style="background: #7f8c8d;">← Вернуться к словарю</a>
         <a href="{% url 'dictionary:search' %}?q={{ word.russian }}" class="btn">Новый поиск →</a>
